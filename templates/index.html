@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>VAD</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="search-container">
+        <form method="post">
+            <input type="text" name="query" placeholder="Search for YT Video">
+            <!--<button type="submit">Search</button>-->
+        </form>
+    </div>
+
+    <div class="results-container">
+        {% for video in videos %}
+        <div class="video-card">
+            <img src="{{ video['snippet']['thumbnails']['default']['url'] }}" alt="Thumbnail">
+            <h3>{{ video['snippet']['title'] }}</h3>
+            <p>Year: {{ video['snippet']['publishedAt'] }}</p>
+            <p>Channel Name: {{ video['snippet']['channelTitle'] }}</p>
+            <button class="download-button" data-src="{{ url_for('download', video_id=video['id']['videoId']) }}"
+                data-title="{{ video['snippet']['title'] }}" onclick="showAlert(this)">Download</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        const downloadButtons = document.querySelectorAll('.download-button');
+
+        function showAlert(button) {
+            const title = button.getAttribute('data-title');
+            // Display an alert with a timer of 10 seconds
+            const alertMessage = `Downloading ${title}.mp3. Your download will start shortly. If it doesn't, then hit the download button again. It will take few minutes.`;
+            alert(alertMessage);
+        }
+
+        downloadButtons.forEach(button => {
+            button.addEventListener('click', async function () {
+
+                // Display an alert with a timer of 10 seconds
+                //const alertMessage = `Downloading ${title}.mp3. Your download will start shortly. If it doesn't, then hit the download button again. It will take 5-10 seconds.`;
+                //alert(alertMessage);
+
+                const audioSrc = this.getAttribute('data-src');
+                const title = this.getAttribute('data-title');
+
+                //const videoTitle = this.closest('.video-card').querySelector('h3').textContent;
+                console.log(title);
+
+
+                const audioUrl = '/static/audio/audio.mp3';
+
+                const extractedAudio = await fetch(audioSrc);
+                const blob = await extractedAudio.blob();
+                const url = URL.createObjectURL(blob);
+
+                // Create a temporary <a> element to trigger the download
+                const a = document.createElement('a');
+
+                // Set the href attribute with the dynamically generated audio filename
+                a.href = audioUrl;
+                a.download = title + ".mp3"; // Set the filename based on the video title
+                document.body.appendChild(a);
+                a.click();
+
+                // Cleanup: Remove the temporary <a> element
+                document.body.removeChild(a);
+
+            });
+        });
+    </script>
+    <div class="footer">
+        <p>© All Rights Reserved</p>
+        <p>Video Audio Downloader</p>
+        <p>Gravity™️</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(46, 0, 60);
+}
+
+.search-container {
+    text-align: center;
+    /*margin: 20px;*/
+    width: 100vw;
+}
+
+.search-container input {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    padding: 15px;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.results-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: rgb(0, 0, 111);
+}
+
+.video-card {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: whitesmoke;
+}
+
+.video-card img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.download-button {
+    padding: 5px;
+    background-color: rgb(46, 0, 60);
+    border: 5px solid transparent;
+    border-radius: 5px;
+    color: aliceblue;
+    font-weight: bolder;
+}
+
+.download-button:hover {
+    background-color: brown;
+    border-color: brown;
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    background-color: black;
+    color: white;
+    font-weight: 100;
+    text-align: center;
+}
